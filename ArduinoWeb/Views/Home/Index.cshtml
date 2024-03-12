@@ -1,0 +1,92 @@
+﻿@model ArduinoWeb.ViewModels.DispositivoVm
+
+
+@{ ViewData["Title"] = "Home"; }
+
+<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px;">
+    <h3></h3>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-3">
+        
+        <div class="form-group" style="margin-bottom: 20px">
+            <label for="devicesMenu">Dispositivo corrente:</label>
+            <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" id="devicesMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 185px">
+                    @Model.TipoNome
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="devicesMenu">
+                    @foreach (var item in Model.RelatorioDispositivos)
+                    {
+                        <li><a href="@Url.Action("Index", new {id = item.RelatorioDispositivoId})">@item.Nome</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px">
+            <label for="locationsMenu">Definir Localização:</label> <a href="@Url.Action("Adicionar Localização", "Home")">Adicionar</a>
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" id="locationsMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 185px">
+                    @Model.LocalizacaoNome
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="locationsMenu">
+                    @foreach (var item in Model.Localizacoes)
+                    {
+                        <li><a href="@Url.Action("ALteraLocalizacao", new {relatorioDispositivoId = Model.RelatorioDispositivoId, localizacaoId = item.LocalizacaoId})">@item.Nome</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="form-group" style="margin-bottom: 20px">
+
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" id="locationsMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 185px">
+                    Leituras por Sala
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="locationsMenu">
+                    @foreach (var item in Model.Localizacoes)
+                    {
+                        <li><a href="@Url.Action("TodasPorLocal", new { localizacaoId = item.LocalizacaoId})">@item.Nome</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 35px">
+            <label>Último IP Local:</label>
+            <div class="dropdown">
+                <a href="http://@Model.LocalIp" target="_blank" class="btn btn-default" role="button" style="width: 185px;">@Model.LocalIp</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Últimas Leituras:</label><br/>
+            <div class="dropdown">
+                <div class="alert alert-info" style="width: 185px; margin-bottom: 15px; padding: 5px; text-align: center">@Model.LastSet.TempString graus centígrados</div>
+            </div>
+          
+            <span style="font-style: italic">Em @Model.LastSet.DateOnlyString @Model.LastSet.TimeOnlyString</span>
+        </div>
+
+    </div>
+    <div class="col-lg-9">
+        <div id="chart_div" style="width: 100%; min-height: 500px"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['line'] });
+        google.charts.setOnLoadCallback(function () { drawChart(@Model.RelatorioDispositivoId); });
+        $(window).resize(function () { drawChart(@Model.RelatorioDispositivoId); });
+    </script>
+}

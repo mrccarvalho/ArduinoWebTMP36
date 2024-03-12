@@ -1,0 +1,31 @@
+﻿@model ArduinoWeb.ViewModels.LocalizacaoHandlerVm
+
+@{
+    ViewData["Title"] = "Adicionar Localização";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.NomeLocalizacao)
+        @Html.TextBoxFor(m => m.NomeLocalizacao, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LocalizacaoDescricao)
+        @Html.TextBoxFor(m => m.LocalizacaoDescricao, new { @class = "form-control" })
+    </div>
+    <div class="form-check">
+        <div class="er"></div>
+        @if (!Model.Sucesso && !string.IsNullOrEmpty(Model.Mensagem))
+        {
+            <div class="alert alert-danger">@Model.Mensagem</div>
+        }
+        else
+        {
+            <div class="alert"><br /></div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Submeter</button>
+}

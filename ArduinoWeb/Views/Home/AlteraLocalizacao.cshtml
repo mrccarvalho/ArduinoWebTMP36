@@ -1,0 +1,30 @@
+﻿@model ArduinoWeb.ViewModels.LocalizacaoHandlerVm
+
+@{ ViewData["Title"] = "Alterar Localização"; }
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    Device ID: @Model.RelatorioDispositivoId <br />
+    Device Type: @Model.DispositivoNome <br />
+    New Location: @Model.NomeLocalizacao
+</p>
+
+<p>
+    @if (Model.Sucesso)
+    {
+        <div class="success">Localização alterada com sucesso.</div>
+    }
+    else
+    {
+        <div class="has-error">
+            Erro ao alterar localização:
+            <br />
+            @Model.Mensagem
+        </div>
+    }
+</p>
+
+<p>
+    @Html.ActionLink("Voltar/HomePage", "Index", @Model.RelatorioDispositivoId)
+</p>

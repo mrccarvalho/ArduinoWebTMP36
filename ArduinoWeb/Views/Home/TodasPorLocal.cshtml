@@ -1,0 +1,52 @@
+﻿@model List<ArduinoWeb.Models.Medicao>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px;">
+    <h3></h3>
+    <p>Arduino - web.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+
+        <div class="form-group" style="margin-bottom: 20px">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+
+                        <th scope="col">Data</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                        @foreach (Medicao medicao in Model)
+                        {
+                        <tr>
+                            <td>@medicao.DataMedicao</td>
+                            <td>@medicao.TipoMedicao.Nome</td>
+                            <td>@medicao.ValorLido</td>
+                        </tr>
+                        }
+                   
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+      
+     
+
+    </div>
+    <div class="col-lg-9">
+    </div>
+</div>
+
+@section Scripts {
+
+}
